@@ -15,7 +15,7 @@ const theme = createTheme({
 
 export const ViewScreen: FC = () => {
   const [count, setCount] = useState(0);
-  
+
   useEffect(() => {
     if (!screen) return;
 
@@ -50,7 +50,7 @@ export const ViewScreen: FC = () => {
       callbacks.forEach((callback) => callback());
     };
   }, [screen]);
-  
+
   return (
     <Paper sx={{ p: 2 }}>
       <Button
@@ -64,7 +64,6 @@ export const ViewScreen: FC = () => {
             fontFamily:
               'Menlo, Cascadia Code, Consolas, Liberation Mono, monospace, Monaco, "Courier New", monospace',
             fontWeight: 'normal',
-            whiteSpace: 'pre',
           }}
         >
           <span style={{ color: '#333' }}>window</span>
@@ -73,7 +72,7 @@ export const ViewScreen: FC = () => {
         </span>
       </Button>
 
-      <Box mt={2}>
+      <Box mt={2} sx={{ overflowX: 'auto' }}>
         <ThemeProvider theme={theme}>
           <ObjectView value={screen} key={count}/>
         </ThemeProvider>
@@ -87,7 +86,7 @@ export const QueryWindowManagementPermissionStatus: FC = () => {
   const [permissionStatusPromise, setPermissionStatusPromise] = useState<Promise<PermissionStatus> | null>(() => {
     return navigator.permissions.query({ name: "window-management" as any })
   });
-  
+
   const queryPermission = useCallback(async () => {
     const permissionStatus = navigator.permissions.query({ name: "window-management" as any })
     setPermissionStatusPromise(permissionStatus);
@@ -128,7 +127,7 @@ export const QueryWindowManagementPermissionStatus: FC = () => {
       callbacks.forEach((callback) => callback());
     };
   }, [permissionStatusPromise]);
-  
+
   return (
     <Paper sx={{ p: 2 }}>
       <Button
@@ -142,7 +141,6 @@ export const QueryWindowManagementPermissionStatus: FC = () => {
             fontFamily:
               'Menlo, Cascadia Code, Consolas, Liberation Mono, monospace, Monaco, "Courier New", monospace',
             fontWeight: 'normal',
-            whiteSpace: 'pre',
           }}
         >
           <span style={{ color: '#333' }}>navigator</span>
@@ -158,7 +156,7 @@ export const QueryWindowManagementPermissionStatus: FC = () => {
         </span>
       </Button>
 
-      <Box mt={2}>
+      <Box mt={2} sx={{ overflowX: 'auto' }}>
         <ThemeProvider theme={theme}>
           <ObjectView value={permissionStatusPromise} key={count}/>
         </ThemeProvider>
@@ -172,7 +170,7 @@ export const ViewScreenDetails: FC = () => {
   const [screenDetailsPromise, setScreenDetailsPromise] = useState<Promise<ScreenDetails> | null>(() => {
     return window.getScreenDetails();
   });
-  
+
   const getScreenDetails = useCallback(async () => {
     const screenDetailsPromise = window.getScreenDetails();
     setScreenDetailsPromise(screenDetailsPromise);
@@ -215,7 +213,7 @@ export const ViewScreenDetails: FC = () => {
         for (const screenDetailed of screenDetails.screens) {
           screenDetailed.addEventListener('change', handler);
           screenDetailed.orientation.addEventListener('change', handler);
-  
+
           callbacks.push(() => {
             screenDetailed.removeEventListener('change', handler);
             screenDetailed.orientation.removeEventListener('change', handler);
@@ -229,7 +227,7 @@ export const ViewScreenDetails: FC = () => {
       callbacks.forEach((callback) => callback());
     };
   }, [screenDetailsPromise]);
-  
+
   return (
     <Paper sx={{ p: 2 }}>
       <Button
@@ -243,7 +241,6 @@ export const ViewScreenDetails: FC = () => {
             fontFamily:
               'Menlo, Cascadia Code, Consolas, Liberation Mono, monospace, Monaco, "Courier New", monospace',
             fontWeight: 'normal',
-            whiteSpace: 'pre',
           }}
         >
           <span style={{ color: '#333' }}>window</span>
@@ -253,7 +250,7 @@ export const ViewScreenDetails: FC = () => {
         </span>
       </Button>
 
-      <Box mt={2}>
+      <Box mt={2} sx={{ overflowX: 'auto' }}>
         <ThemeProvider theme={theme}>
           <ObjectView value={screenDetailsPromise} key={count}/>
         </ThemeProvider>

@@ -14,11 +14,12 @@ function allKeys<T>(obj: T): (keyof T)[] {
 
 function orderedKeys<T>(obj: T): (keyof T)[] {
   const all = allKeys(obj);
-  const allSet = new Set(all);
   const fnKeys = all.filter((key) => typeof obj[key] === 'function');
-  const restSet = allSet.difference(new Set(fnKeys));
+  // Manually compute the difference
+  const fnKeySet = new Set(fnKeys);
+  const rest = all.filter((key) => !fnKeySet.has(key));
 
-  const restSorted = [...restSet].sort();
+  const restSorted = [...rest].sort();
   const fnSorted = [...fnKeys].sort();
 
   return [...restSorted, ...fnSorted];
