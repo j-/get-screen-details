@@ -81,15 +81,19 @@ export const ViewScreen: FC = () => {
   );
 };
 
+const initQueryPermissionStatus = async () => {
+  return navigator.permissions.query({ name: "window-management" as any });
+};
+
 export const QueryWindowManagementPermissionStatus: FC = () => {
   const [count, setCount] = useState(0);
-  const [permissionStatusPromise, setPermissionStatusPromise] = useState<Promise<PermissionStatus> | null>(() => {
-    return navigator.permissions.query({ name: "window-management" as any })
-  });
+
+  const [permissionStatusPromise, setPermissionStatusPromise] = useState<
+    Promise<PermissionStatus> | null
+  >(initQueryPermissionStatus);
 
   const queryPermission = useCallback(async () => {
-    const permissionStatus = navigator.permissions.query({ name: "window-management" as any })
-    setPermissionStatusPromise(permissionStatus);
+    setPermissionStatusPromise(initQueryPermissionStatus);
   }, []);
 
   useEffect(() => {
@@ -165,15 +169,19 @@ export const QueryWindowManagementPermissionStatus: FC = () => {
   );
 };
 
+const initScreenDetails = async () => {
+  return window.getScreenDetails();
+};
+
 export const ViewScreenDetails: FC = () => {
   const [count, setCount] = useState(0);
-  const [screenDetailsPromise, setScreenDetailsPromise] = useState<Promise<ScreenDetails> | null>(() => {
-    return window.getScreenDetails();
-  });
+
+  const [screenDetailsPromise, setScreenDetailsPromise] = useState<
+    Promise<ScreenDetails> | null
+  >(initScreenDetails);
 
   const getScreenDetails = useCallback(async () => {
-    const screenDetailsPromise = window.getScreenDetails();
-    setScreenDetailsPromise(screenDetailsPromise);
+    setScreenDetailsPromise(initScreenDetails);
   }, []);
 
   useEffect(() => {

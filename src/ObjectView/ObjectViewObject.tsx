@@ -4,12 +4,23 @@ import type { FC } from 'react';
 import { ObjectView } from '.';
 import { ObjectViewFunction } from './ObjectViewFunction';
 
-function allKeys<T>(obj: T): (keyof T)[] {
+function forInKeys<T>(obj: T): (keyof T)[] {
   const keys: (keyof T)[] = [];
   for (const key in obj) {
     keys.push(key);
   }
   return keys;
+}
+
+function ownKeys<T>(obj: T): (keyof T)[] {
+  return Object.getOwnPropertyNames(obj) as (keyof T)[];
+}
+
+function allKeys<T>(obj: T): (keyof T)[] {
+  const keys = new Set<keyof T>();
+  for (const key of forInKeys(obj)) keys.add(key);
+  for (const key of ownKeys(obj)) keys.add(key);
+  return [...keys.values()];
 }
 
 function orderedKeys<T>(obj: T): (keyof T)[] {
